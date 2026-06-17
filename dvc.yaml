@@ -1,0 +1,9 @@
+stages:
+  train:
+    cmd: python src/devops_ml/train.py
+    deps:
+      - data/raw/housing_data.csv
+      - src/devops_ml/train.py
+    outs:
+      - models/housing_model.pkl
+      - models/housing_model.onnx
