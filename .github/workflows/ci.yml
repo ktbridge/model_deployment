@@ -46,7 +46,7 @@ jobs:
         graph = helper.make_graph([node], 'dummy_graph', 
             [helper.make_tensor_value_info('input', TensorProto.FLOAT, [1, 10])], 
             [helper.make_tensor_value_info('output', TensorProto.FLOAT, [1, 10])])
-        model = helper.make_model(graph, producer_name='mock')
+        model = helper.make_model(graph, producer_name='mock', ir_version=11)
         import os; os.makedirs('models', exist_ok=True)
         onnx.save(model, 'models/housing_model.onnx')
         " 
