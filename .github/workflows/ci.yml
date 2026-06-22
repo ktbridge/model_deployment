@@ -43,18 +43,19 @@ jobs:
         import onnx
         from onnx import helper, TensorProto
         node = helper.make_node('Identity', ['input'], ['output'])
-        graph = helper.make_graph([node], 'dummy_graph', 
-            [helper.make_tensor_value_info('input', TensorProto.FLOAT, [1, 10])], 
-            [helper.make_tensor_value_info('output', TensorProto.FLOAT, [1, 10])])
         
-        # Enforce both safe IR version and an older official Opset version (like 15)
+        # Adjust dimensions from [1, 10] to [1, 2] to match a 2-feature input matrix
+        graph = helper.make_graph([node], 'dummy_graph', 
+            [helper.make_tensor_value_info('input', TensorProto.FLOAT, [1, 2])], 
+            [helper.make_tensor_value_info('output', TensorProto.FLOAT, [1, 2])])
+        
         opset = helper.make_operatorsetid('', 15)
         model = helper.make_model(graph, producer_name='mock', ir_version=11, opset_imports=[opset])
         
         import os; os.makedirs('models', exist_ok=True)
         onnx.save(model, 'models/housing_model.onnx')
         "
-        
+
     # 7. Run your entire local test suite (Pytest + Great Expectations + Schemathesis)
     - name: Run Test Suite
       run: |
