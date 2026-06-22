@@ -1,0 +1,10 @@
+fastapi 
+uvicorn 
+pytest 
+schemathesis 
+great_expectations 
+pandas 
+numpy 
+scikit-learn
+skl2onnx
+onnxruntime
