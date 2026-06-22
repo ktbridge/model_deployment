@@ -42,12 +42,13 @@ jobs:
         python -c "
         import onnx
         from onnx import helper, TensorProto
-        node = helper.make_node('Identity', ['input'], ['output'])
         
-        # Adjust dimensions from [1, 10] to [1, 2] to match a 2-feature input matrix
+        # Use ReduceSum to collapse a [1, 2] input matrix down to a single [1, 1] price output matrix
+        node = helper.make_node('ReduceSum', ['input'], ['output'], keepdims=1)
+        
         graph = helper.make_graph([node], 'dummy_graph', 
             [helper.make_tensor_value_info('input', TensorProto.FLOAT, [1, 2])], 
-            [helper.make_tensor_value_info('output', TensorProto.FLOAT, [1, 2])])
+            [helper.make_tensor_value_info('output', TensorProto.FLOAT, [1, 1])])
         
         opset = helper.make_operatorsetid('', 15)
         model = helper.make_model(graph, producer_name='mock', ir_version=11, opset_imports=[opset])
@@ -55,7 +56,6 @@ jobs:
         import os; os.makedirs('models', exist_ok=True)
         onnx.save(model, 'models/housing_model.onnx')
         "
-
     # 7. Run your entire local test suite (Pytest + Great Expectations + Schemathesis)
     # 7. Run your entire local test suite with detailed output logs
     - name: Run Test Suite
