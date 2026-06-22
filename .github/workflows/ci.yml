@@ -37,9 +37,9 @@ jobs:
 
     # 6. Create a mock model file since DVC cloud storage isn't connected yet
     - name: Mock DVC Model File
-    - run: |
-      mkdir -p models
-      touch models/housing_model.onnx  
+      run: |
+       mkdir -p models
+       touch models/housing_model.onnx  
 
     # 7. Run your entire local test suite (Pytest + Great Expectations + Schemathesis)
     - name: Run Test Suite
