@@ -1,0 +1,22 @@
+schema: '2.0'
+stages:
+  train:
+    cmd: python src/devops_ml/train.py
+    deps:
+    - path: data/raw/housing_data.csv
+      hash: md5
+      md5: 58acccbf74ef8430cc25e3a186cf3a6a
+      size: 115
+    - path: src/devops_ml/train.py
+      hash: md5
+      md5: e366d2655a1af2e0f81526d3b6b527e5
+      size: 2842
+    outs:
+    - path: models/housing_model.onnx
+      hash: md5
+      md5: 8f538d86807e8bf123e4fa489d04a924
+      size: 245
+    - path: models/housing_model.pkl
+      hash: md5
+      md5: 45419906d4ab6bc20a9d921ebfa8c86b
+      size: 873
