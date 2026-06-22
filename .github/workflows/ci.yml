@@ -30,10 +30,16 @@ jobs:
         pip install -r requirements.txt
 
     # 6. Pull the model data using DVC (mocked/skipped here if no cloud storage is configured yet)
-    - name: Pull Data and Model via DVC
-      run: |
-        pip install dvc
-        # dvc pull <-- If you have remote storage set up later, this goes here
+    # - name: Pull Data and Model via DVC
+    #   run: |
+    #     pip install dvc
+    #     # dvc pull <-- If you have remote storage set up later, this goes here
+
+    # 6. Create a mock model file since DVC cloud storage isn't connected yet
+    - name: Mock DVC Model File
+    - run: |
+      mkdir -p models
+      touch models/housing_model.onnx  
 
     # 7. Run your entire local test suite (Pytest + Great Expectations + Schemathesis)
     - name: Run Test Suite
