@@ -38,8 +38,18 @@ jobs:
     # 6. Create a mock model file since DVC cloud storage isn't connected yet
     - name: Mock DVC Model File
       run: |
-       mkdir -p models
-       touch models/housing_model.onnx  
+        pip install onnx
+        python -c "
+        import onnx
+        from onnx import helper, TensorProto
+        node = helper.make_node('Identity', ['input'], ['output'])
+        graph = helper.make_graph([node], 'dummy_graph', 
+            [helper.make_tensor_value_info('input', TensorProto.FLOAT, [1, 10])], 
+            [helper.make_tensor_value_info('output', TensorProto.FLOAT, [1, 10])])
+        model = helper.make_model(graph, producer_name='mock')
+        import os; os.makedirs('models', exist_ok=True)
+        onnx.save(model, 'models/housing_model.onnx')
+        " 
 
     # 7. Run your entire local test suite (Pytest + Great Expectations + Schemathesis)
     - name: Run Test Suite
