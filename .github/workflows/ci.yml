@@ -57,9 +57,10 @@ jobs:
         "
 
     # 7. Run your entire local test suite (Pytest + Great Expectations + Schemathesis)
+    # 7. Run your entire local test suite with detailed output logs
     - name: Run Test Suite
       run: |
-        pytest
+        pytest -vv -s
 
     # 8. Test that the Docker image builds flawlessly
     - name: Verify Docker Build
